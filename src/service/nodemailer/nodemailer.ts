@@ -1,12 +1,13 @@
 import nodemailer from 'nodemailer'
+import config from '../../config/env'
 import { SendEmail, SendEmailDTO } from '../interfaces/send-email'
 
 const transport = nodemailer.createTransport({
   host: 'smtp.mailtrap.io',
   port: 2525,
   auth: {
-    user: '39a1091a67d127',
-    pass: '0a6aca9169176c'
+    user: config.nodemailer.auth.pass,
+    pass: config.nodemailer.auth.pass
   }
 })
 
