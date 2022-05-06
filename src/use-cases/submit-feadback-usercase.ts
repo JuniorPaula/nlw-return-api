@@ -1,4 +1,5 @@
 import { FeadbacksRepository } from '../repositories/interfaces/feadbacks-repository'
+import { SendEmail } from '../service/interfaces/send-email'
 
 interface SubmitFeadbackUsecaseRequest {
   type: string
@@ -8,8 +9,13 @@ interface SubmitFeadbackUsecaseRequest {
 
 export class SubmitFeadbackUsecase {
   private readonly feadbackRepository: FeadbacksRepository
-  constructor (feadbackRepository: FeadbacksRepository) {
+  private readonly sendEmail: SendEmail
+  constructor (
+    feadbackRepository: FeadbacksRepository,
+    sendEmail: SendEmail
+  ) {
     this.feadbackRepository = feadbackRepository
+    this.sendEmail = sendEmail
   }
 
   async handle (request: SubmitFeadbackUsecaseRequest): Promise<void> {
@@ -19,6 +25,14 @@ export class SubmitFeadbackUsecase {
       type,
       comment,
       screenshot
+    })
+
+    await this.sendEmail.sendMail({
+      subject: 'Novo feadback',
+      body: [
+        `<p>Tipo de feadback: ${type}</p>`,
+        `<p>Comentário: ${comment}</p>`
+      ].join('\n')
     })
   }
 }
