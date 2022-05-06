@@ -39,4 +39,17 @@ describe('SubmitFeadback', () => {
       screenshot: 'data:image/png;base64,any_screenshot'
     })).rejects.toThrow()
   })
+
+  test('Should not be able to submit a feadback with invalid screenshot', async () => {
+    const submitFeadback = new SubmitFeadbackUsecase(
+      { create: async () => {} },
+      { sendMail: async () => {} }
+    )
+
+    expect(submitFeadback.handle({
+      type: 'any_type',
+      comment: '',
+      screenshot: 'invalid_screenshot'
+    })).rejects.toThrow()
+  })
 })
