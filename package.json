@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "sucrase-node src/server.ts",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand"
+    "test": "jest --passWithNoTests  --noStackTrace --runInBand"
   },
   "author": "Junior Paula",
   "license": "MIT",
